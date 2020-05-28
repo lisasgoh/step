@@ -4,15 +4,112 @@
     <meta charset="UTF-8">
     <title>My Portfolio</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!--<script src="script.js"></script>-->
   </head>
   <body>
+    <div class="topnav">
+      <a href="#about-me">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#hobbies">Hobbies</a>
+      <a href="#contact">Contact</a>
+    </div>
     <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
+      <h1>Hi, I'm Lisa. <br> I am a </br></h1>
+    </div>
+    <div>
+      <h2 id="about-me" class="section">ABOUT ME</h2>
+      <div class="container">
+        <div class="col-lg-6 col-lg-offset-3">
+          <p id="about-me-info"> I am a second-year undergraduate student, currently studying Computer Science and Business (Business Analytics) in Nanyang Technological University. </p>
+        </div>
+      </div>
+      <h2 id= "experience" class="section">EXPERIENCE</h2>
+      <div class= "container">
+        <div class="row">
+          <div class="col-lg-4 col-md-3" id="google-internship">
+            <div class="card card-body">
+              <img class="icon" id="google-icon" src="/images/google.png">
+              <h3>Google, STEP Intern</h3>
+            </div>
+          </div>
+          <div class= "col-sm-6 col-md-4" id="astar-internship">
+            <div class="card card-body">
+              <img id="astar-icon" class="icon" src="/images/astar.jpg">
+              <h3>Agency for Science, Technology and Research (A*STAR)</h3>
+              <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#astar-extra">Read More</button>
+              <div id= "astar-extra" class="collapse">
+                <p>I worked at Singapore Institute of Manufacturing Technology (SIMTech), which is under A*STAR in Singapore.</p>
+                <ul>
+                  <li> Developed an application in Python to translate human voice into robot commands and an MQTT-based transmission application to send commands to multiple computers, to send vocal commands to robots off-line.</li>
+                  <li> Developed an Application Programming Interface (API) in Python to perform functions such as moving objectives within a Virtual Reality Environment to simulate sending commands to a real drone, as well as other functions such as webscraping</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 id= "projects" class="section">PROJECTS AND COMPETITIONS</h2>
+      <div class= "container">
+        <div class="row">
+            <div class= "col-sm-6 col-md-4">
+              <div class="card card-body">
+                  <img id="edupedia-icon" class="icon"  src="/images/edupedia.png">
+                  <h3>Edupedia</h3>
+                  <p class="project-description">An Android Application to help users search and filter for schools based on selected criteria.</p>
+                  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#edupedia-extra">Read More</button>
+                  <div id="edupedia-extra" class="collapse">
+                  <p>Developed an Android application that allows users to </p>
+                    <ul>
+                      <li> Integrated Google Maps API such that </li>
+                      <li> Implemented asynchronous functions </li>
+                    </ul>
+                  </div>
+              </div>
+            </div>
+            <div class= "col-sm-6 col-md-4">
+              <div class="card card-body">
+                  <img id="study-buddy-icon" class="icon"  src="/images/studybuddy.png">
+                  <h3>Study Buddy</h3>
+                  <p class="project-description">A React Native prototype application to help users search for the correct revision materials.</p>
+                  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#study-buddy-extra">Read More</button>
+                  <div id="study-buddy-extra" class="collapse">
+                  <p>Developed a prototype application for NTU's 'Hackfest' Hackathon (Partnered with Shopee and Bosch).</p>
+                    <ul>
+                      <li> Mainly worked on front-end with React Native </li>
+                    </ul>
+                  </div>
+              </div>
+            </div>
+            <div class= "col-sm-6 col-md-4">
+              <div class="card card-body">
+                  <img id="paradigym-icon" class="icon"  src="/images/paradigym.jpg">
+                  <h3>ParadiGYM Bot</h3>
+                  </p class="project-description" >A Telegram Bot connected with Google Apps Script to update spreadsheet remotely.</p>
+                  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#paradigym-extra">Read More</button>
+                  <div id="paradigym-extra" class="collapse">
+                    <p>Developed a Telegram bot with Google Apps Script, to manage data from a spreadsheet.</p>
+                    <ul>
+                      <li> Implemented several functions such as /nominate, which enables the user to nominate other users for a particular exercise.</li>
+                    </ul>
+                  </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <h2 id="hobbies" class="section">Hobbies</h2>
+      <div class= "container">
+        <div class="row">
+          <div class= "col-sm-6 col-md-4">
+            <div class="card card-body">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>

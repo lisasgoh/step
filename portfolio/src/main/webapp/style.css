@@ -1,9 +1,89 @@
-#content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
+h2 {
+    font-family: sans-serif;
+    text-align: center;
+    color: #39CCCC;
 }
 
-#greeting-container {
-  margin-top: 20px;
+h1 {
+    font-family: sans-serif;
+    color: black;
+}
+.topnav {
+    background-color: white;
+}
+
+.topnav a {
+  font-family: sans-serif;
+  color:#2badd9;
+  font-size: 18px;
+  text-align: center;
+  padding: 14px 16px;
+}
+
+.topnav a:hover {
+  color: sandybrown;
+  background-color: yellow;
+}
+
+p {
+    font-family: sans-serif;
+    font-size: 18px;
+}
+
+img {
+  margin: 10px;
+  max-height: 200px;
+  max-width: 200px;
+}
+
+
+h3 {
+    color:black;
+    font-family: sans-serif;
+    margin: 5px 2px 5px 2px;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.arrow {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+#about-me-info {
+    text-align: center;
+}
+
+.section {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.icon {
+    border-radius:50%;
+    height: 100px;
+    width: 100px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+} 
+
+#astar-icon {
+    width:200px;
 }
