@@ -1,15 +1,11 @@
 h2 {
     font-family: sans-serif;
     text-align: center;
-    color: #39CCCC;
 }
 
-h1 {
-    font-family: sans-serif;
-    color: black;
-}
 .topnav {
     background-color: white;
+    overflow: hidden;
 }
 
 .topnav a {
@@ -46,7 +42,9 @@ h3 {
 
 h1 {
     text-align: center;
-    padding-top: 20px;
+    font-family: sans-serif;
+    color: black;
+    padding-top: 80px;
 }
 
 .arrow {
@@ -70,10 +68,6 @@ h1 {
     text-align: center;
 }
 
-.section {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
 
 .icon {
     border-radius:50%;
@@ -86,4 +80,32 @@ h1 {
 
 #astar-icon {
     width:200px;
+}
+
+#typewriter {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-family:sans-serif;
+    text-align: center;
+}
+.link-logo {
+  max-height: 50px;
+  max-width: 50px;
+}
+
+.section {
+    padding-top: 50px;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.section-header {
+    font-family: Helvetica;
+    color: #39CCCC;
 }
