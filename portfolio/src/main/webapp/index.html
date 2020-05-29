@@ -2,44 +2,49 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>My Portfolio</title>
+    <title>Lisa's Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <!--<script src="script.js"></script>-->
+    <script src="script.js"></script>
   </head>
   <body>
     <div class="topnav">
       <a href="#about-me">About</a>
       <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
-      <a href="#hobbies">Hobbies</a>
       <a href="#contact">Contact</a>
     </div>
     <div id="content">
-      <h1>Hi, I'm Lisa. <br> I am a </br></h1>
+      <h1>Hi, I'm Lisa.</h1>
+      <p id="typewriter"></p>
     </div>
     <div>
-      <h2 id="about-me" class="section">ABOUT ME</h2>
-      <div class="container">
-        <div class="col-lg-6 col-lg-offset-3">
-          <p id="about-me-info"> I am a second-year undergraduate student, currently studying Computer Science and Business (Business Analytics) in Nanyang Technological University. </p>
+      <h2 id="about-me" class="section-header">ABOUT ME</h2>
+      <div class="container section">
+        <div class="row">
+          <div class="col-md-6 offset-md-3">
+            <p id="about-me-info"> I am a second-year undergraduate student, currently studying Computer Science and Business (Business Analytics) in Nanyang Technological University. </p>
+          </div>
         </div>
       </div>
-      <h2 id= "experience" class="section">EXPERIENCE</h2>
-      <div class= "container">
+      <h2 id= "experience" class="section-header">EXPERIENCE</h2>
+      <div class= "container section">
         <div class="row">
-          <div class="col-lg-4 col-md-3" id="google-internship">
+          <div class="col-md-4 offset-md-2" id="google-internship">
             <div class="card card-body">
-              <img class="icon" id="google-icon" src="/images/google.png">
-              <h3>Google, STEP Intern</h3>
+              <img class="icon" id="google-icon" src="/images/google.png" alt="Google logo">
+              <h3>Google, Student Training in Engineering Program (STEP) Intern</h3>
+              <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#google-extra">Read More</button>
+              <div id= "google-extra" class="collapse">
+              </div>
             </div>
           </div>
-          <div class= "col-sm-6 col-md-4" id="astar-internship">
+          <div class= "col-md-4" id="astar-internship">
             <div class="card card-body">
-              <img id="astar-icon" class="icon" src="/images/astar.jpg">
+              <img id="astar-icon" class="icon" src="/images/astar.jpg" alt="Astar logo">
               <h3>Agency for Science, Technology and Research (A*STAR)</h3>
               <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#astar-extra">Read More</button>
               <div id= "astar-extra" class="collapse">
@@ -53,12 +58,12 @@
           </div>
         </div>
       </div>
-      <h2 id= "projects" class="section">PROJECTS AND COMPETITIONS</h2>
-      <div class= "container">
+      <h2 id= "projects" class="section-header">PROJECTS AND COMPETITIONS</h2>
+      <div class= "container section">
         <div class="row">
             <div class= "col-sm-6 col-md-4">
               <div class="card card-body">
-                  <img id="edupedia-icon" class="icon"  src="/images/edupedia.png">
+                  <img id="edupedia-icon" class="icon"  src="/images/edupedia.png" alt="Graduation hat icon">
                   <h3>Edupedia</h3>
                   <p class="project-description">An Android Application to help users search and filter for schools based on selected criteria.</p>
                   <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#edupedia-extra">Read More</button>
@@ -73,7 +78,7 @@
             </div>
             <div class= "col-sm-6 col-md-4">
               <div class="card card-body">
-                  <img id="study-buddy-icon" class="icon"  src="/images/studybuddy.png">
+                  <img id="study-buddy-icon" class="icon"  src="/images/studybuddy.png" alt="Study app icon">
                   <h3>Study Buddy</h3>
                   <p class="project-description">A React Native prototype application to help users search for the correct revision materials.</p>
                   <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#study-buddy-extra">Read More</button>
@@ -87,9 +92,9 @@
             </div>
             <div class= "col-sm-6 col-md-4">
               <div class="card card-body">
-                  <img id="paradigym-icon" class="icon"  src="/images/paradigym.jpg">
+                  <img id="paradigym-icon" class="icon"  src="/images/paradigym.jpg" alt="Exercising icon">
                   <h3>ParadiGYM Bot</h3>
-                  </p class="project-description" >A Telegram Bot connected with Google Apps Script to update spreadsheet remotely.</p>
+                  <p class="project-description">A Telegram Bot connected with Google Apps Script to update spreadsheet remotely.</p>
                   <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#paradigym-extra">Read More</button>
                   <div id="paradigym-extra" class="collapse">
                     <p>Developed a Telegram bot with Google Apps Script, to manage data from a spreadsheet.</p>
@@ -101,13 +106,23 @@
             </div>
         </div>
       </div>
-      <h2 id="hobbies" class="section">Hobbies</h2>
-      <div class= "container">
+      <h2 id="contact" class="section-header">CONTACT</h2>
+      <div class= "container section">
         <div class="row">
           <div class= "col-sm-6 col-md-4">
-            <div class="card card-body">
+              <div class="warp">
+                <img class="link-logo"src="/images/gmail.png" alt="Gmail Logo"/>
+                <a href="mailto:lisa.shannon.goh@gmail.com" id="email">Email</a>
+              </div>
+              <div class="warp">
+                <img class="link-logo" src="/images/github.png" alt="Github Logo"/>
+                <a href="https://github.com/lisasgoh" id="github">Github</a>
+              </div>
+              <div class="warp">
+                <img class="link-logo" src="/images/linkedin.png" alt="Linkedin Logo">
+                <a href="https://www.linkedin.com/in/lisa-shannon-goh-79a298185/" id="linkedin">Linkedin</a>
+              </div>
             </div>
-          </div>
         </div>
       </div>
     </div>
