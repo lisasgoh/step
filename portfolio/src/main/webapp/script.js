@@ -14,7 +14,7 @@
 
 document.addEventListener('DOMContentLoaded',function(event){
   // array with texts to type in typewriter
-  var dataText = [ "Programmer", "Learner" , "Dancer"];
+  var dataText = [ "Programmer", "Learner" , "Dancer"]; 
   // type one text in the typwriter, keeps calling itself until the text is finished
     function typeWriter(text, i, fnCallback) {
     // check if text isn't finished yet
@@ -46,3 +46,9 @@ document.addEventListener('DOMContentLoaded',function(event){
   // start the text animation
     StartTextAnimation(0);
 });
+
+function getGreeting() {
+  fetch('/data').then(response => response.text()).then((greeting) => {
+    document.getElementById('greeting').innerText = greeting;
+  });
+}

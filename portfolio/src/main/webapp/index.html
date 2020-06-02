@@ -17,16 +17,18 @@
       <a href="#projects">Projects</a>
       <a href="#contact">Contact</a>
     </div>
-    <div id="content">
-      <h1>Hi, I'm Lisa.</h1>
+    <div>
+      <h1 id="introduction">Hi, I'm Lisa.</h1>
       <p id="typewriter"></p>
     </div>
     <div>
-      <h2 id="about-me" class="section-header">ABOUT ME</h2>
-      <div class="container section">
+      <h2 class="section-header">ABOUT ME</h2>
+      <div id="about-me" class="container section">
         <div class="row">
           <div class="col-md-6 offset-md-3">
             <p id="about-me-info"> I am a second-year undergraduate student, currently studying Computer Science and Business (Business Analytics) in Nanyang Technological University. </p>
+            <button onclick="getGreeting()">Say Hi!</button>
+            <div id="greeting"></div>
           </div>
         </div>
       </div>
@@ -61,7 +63,7 @@
       <h2 id= "projects" class="section-header">PROJECTS AND COMPETITIONS</h2>
       <div class= "container section">
         <div class="row">
-            <div class= "col-sm-6 col-md-4">
+            <div class= "col-md-4">
               <div class="card card-body">
                   <img id="edupedia-icon" class="icon"  src="/images/edupedia.png" alt="Graduation hat icon">
                   <h3>Edupedia</h3>
@@ -76,7 +78,7 @@
                   </div>
               </div>
             </div>
-            <div class= "col-sm-6 col-md-4">
+            <div class= "col-md-4">
               <div class="card card-body">
                   <img id="study-buddy-icon" class="icon"  src="/images/studybuddy.png" alt="Study app icon">
                   <h3>Study Buddy</h3>
@@ -90,7 +92,7 @@
                   </div>
               </div>
             </div>
-            <div class= "col-sm-6 col-md-4">
+            <div class= "col-md-4">
               <div class="card card-body">
                   <img id="paradigym-icon" class="icon"  src="/images/paradigym.jpg" alt="Exercising icon">
                   <h3>ParadiGYM Bot</h3>
@@ -109,7 +111,7 @@
       <h2 id="contact" class="section-header">CONTACT</h2>
       <div class= "container section">
         <div class="row">
-          <div class= "col-sm-6 col-md-4">
+          <div class= "col-md-4">
               <div class="warp">
                 <img class="link-logo"src="/images/gmail.png" alt="Gmail Logo"/>
                 <a href="mailto:lisa.shannon.goh@gmail.com" id="email">Email</a>

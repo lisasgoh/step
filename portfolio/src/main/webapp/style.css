@@ -47,8 +47,9 @@ h1 {
     padding-top: 80px;
 }
 
-#about-me-info {
+#about-me, #greeting {
     text-align: center;
+    color: white;
 }
 
 
@@ -91,4 +92,13 @@ h1 {
 .section-header {
     font-family: Helvetica;
     color: #39CCCC;
+}
+
+body {
+    background-image: url("/images/computer.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+#introduction, #typewriter {
+    color: white;
 }
