@@ -52,7 +52,6 @@ h1 {
     color: white;
 }
 
-
 .icon {
     border-radius:50%;
     height: 100px;
@@ -72,6 +71,7 @@ h1 {
     font-family:sans-serif;
     text-align: center;
 }
+
 .link-logo {
   max-height: 50px;
   max-width: 50px;
@@ -99,6 +99,7 @@ body {
     background-repeat: no-repeat;
     background-size: contain;
 }
+
 #introduction, #typewriter {
     color: white;
 }
