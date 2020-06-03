@@ -47,8 +47,24 @@ document.addEventListener('DOMContentLoaded',function(event){
     StartTextAnimation(0);
 });
 
-function getGreeting() {
-  fetch('/data').then(response => response.text()).then((greeting) => {
-    document.getElementById('greeting').innerText = greeting;
+function getComment() {
+    fetch('/comments').then(response => response.json()).then((tasks) => {
+    // Build the list of history entries.
+    const taskListElement = document.getElementById('comment-list');
+    tasks.forEach((task) => {
+        taskListElement.appendChild(createTaskElement(task));
+    });
   });
+}
+
+/** Creates an <li> element containing text. */
+function createTaskElement(task) {
+  const taskElement = document.createElement('li');
+  taskElement.className = 'task';
+
+  const commentElement = document.createElement('span');
+  commentElement.innerText = task.comment;
+
+  taskElement.appendChild(commentElement);
+  return taskElement;
 }

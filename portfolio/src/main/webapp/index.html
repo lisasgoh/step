@@ -10,7 +10,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="getComment()">
     <div class="topnav">
       <a href="#about-me">About</a>
       <a href="#experience">Experience</a>
@@ -27,8 +27,6 @@
         <div class="row">
           <div class="col-md-6 offset-md-3">
             <p id="about-me-info"> I am a second-year undergraduate student, currently studying Computer Science and Business (Business Analytics) in Nanyang Technological University. </p>
-            <button onclick="getGreeting()">Say Hi!</button>
-            <div id="greeting"></div>
           </div>
         </div>
       </div>
@@ -127,6 +125,16 @@
             </div>
         </div>
       </div>
-    </div>
+      <div class= "container section">
+        <div class="row">
+            <form action="/comments" method="POST">
+                <p>Leave a comment:</p>
+                <input type="text" name="comment">
+                <br/><br/>
+                <input type="submit" />
+            </form>
+        </div>
+        <ul id="comment-list"></ul>
+      </div>
   </body>
 </html>
