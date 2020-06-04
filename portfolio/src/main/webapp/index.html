@@ -10,7 +10,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="script.js"></script>
   </head>
-  <body onload="getComment()">
+  <body onload="getComments()">
     <div class="topnav">
       <a href="#about-me">About</a>
       <a href="#experience">Experience</a>
@@ -133,6 +133,12 @@
                 <br/><br/>
                 <input type="submit" />
             </form>
+        </div>
+        <div class="row">
+            <label for="number-comments">Number of comments to display:</label>
+            <input type="number" id="number-comments" min="0" max="10" value="0">
+            <br/><br/>
+            <button type="button" onclick="getComments()">Generate comments</button>
         </div>
         <ul id="comment-list"></ul>
       </div>

@@ -20,8 +20,9 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.gson.Gson;
-import com.google.sps.data.Task;
+import com.google.sps.data.Comment;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,42 +37,57 @@ import com.google.gson.Gson;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/comments")
 public class DataServlet extends HttpServlet {
-
   Gson gson = new Gson();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-    Query query = new Query("Task");
-
+    int userInput = getUserInput(request);
+    if (userInput == -1) {
+      response.setContentType("text/html");
+      response.getWriter().println("Please enter a non-negative integer.");
+      return;
+    }
+    Query query = new Query("Comment");
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
-
-    List<Task> tasks = new ArrayList<>();
-    for (Entity entity : results.asIterable()) {
-
+    List<Entity> entities = results.asList(FetchOptions.Builder.withLimit(userInput));
+    List<Comment> commentEntities = new ArrayList<>();
+    for (Entity entity : entities) {
       long id = entity.getKey().getId();
       String comment = (String) entity.getProperty("comment");
-
-      Task task = new Task(id, comment);
-      tasks.add(task);
+      Comment commentEntity = new Comment(id, comment);
+      commentEntities.add(commentEntity);
     }
-
     response.setContentType("application/json");
-    response.getWriter().println(gson.toJson(tasks));
+    response.getWriter().println(gson.toJson(commentEntities));
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-      
     String comment = request.getParameter("comment");
-
-    Entity taskEntity = new Entity("Task");
-    taskEntity.setProperty("comment", comment);
-
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("comment", comment);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(taskEntity);
-
+    datastore.put(commentEntity);
     response.sendRedirect("/index.html");
+  }
+
+  private int getUserInput(HttpServletRequest request) {
+    // Get the input from the form.
+    String userInputString = request.getParameter("value");
+    // Convert the input to an int.
+    int userInput;
+    try {
+      userInput = Integer.parseInt(userInputString);
+    } catch (NumberFormatException e) {
+      System.err.println("Could not convert to int: " + userInputString);
+      return -1;
+    }
+    // Check that the input is in range
+    if (userInput < 0 || userInput > 10) {
+      System.err.println("User input is out of range: " + userInputString);
+      return -1;
+    }
+    return userInput;
   }
 }

@@ -14,12 +14,12 @@
 
 document.addEventListener('DOMContentLoaded',function(event){
   // array with texts to type in typewriter
-  var dataText = [ "Programmer", "Learner" , "Dancer"]; 
+  var dataText = [ "Programmer", "Learner" , "Dancer"];
   // type one text in the typwriter, keeps calling itself until the text is finished
     function typeWriter(text, i, fnCallback) {
     // check if text isn't finished yet
       if (i < (text.length)) {
-        // add next character 
+        // add next character
         document.querySelector("#typewriter").innerHTML = text.substring(0, i+1) +'<span aria-hidden="true"></span>';
         // wait for a while and call this function again for next character
         setTimeout(function() {
@@ -47,24 +47,27 @@ document.addEventListener('DOMContentLoaded',function(event){
     StartTextAnimation(0);
 });
 
-function getComment() {
-    fetch('/comments').then(response => response.json()).then((tasks) => {
+function getComments() {
+    var value = document.getElementById("number-comments").value;
+    console.log(value)
+    fetch("/comments?value="+value).then(response => response.json()).then((comments) => {
     // Build the list of history entries.
-    const taskListElement = document.getElementById('comment-list');
-    tasks.forEach((task) => {
-        taskListElement.appendChild(createTaskElement(task));
+    const commentListElement = document.getElementById('comment-list');
+    commentListElement.innerHTML = "";
+    comments.forEach((comment) => {
+        commentListElement.appendChild(createCommentElement(comment));
     });
   });
 }
 
 /** Creates an <li> element containing text. */
-function createTaskElement(task) {
-  const taskElement = document.createElement('li');
-  taskElement.className = 'task';
+function createCommentElement(commentEntity) {
+  const commentElement = document.createElement('li');
+  commentElement.className = 'comment';
 
-  const commentElement = document.createElement('span');
-  commentElement.innerText = task.comment;
+  const textElement = document.createElement('span');
+  textElement.innerText = commentEntity.comment;
 
-  taskElement.appendChild(commentElement);
-  return taskElement;
+  commentElement.appendChild(textElement);
+  return commentElement;
 }
