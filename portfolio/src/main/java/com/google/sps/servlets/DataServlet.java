@@ -21,8 +21,6 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.FetchOptions;
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
 import com.google.gson.Gson;
 import com.google.sps.data.Comment;
 import java.io.IOException;
@@ -45,7 +43,8 @@ public class DataServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     int userInput = getUserInput(request);
     if (userInput == -1) {
-      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      response.setContentType("text/html");
+      response.getWriter().println("Please enter a non-negative integer.");
       return;
     }
     Query query = new Query("Comment");
@@ -65,19 +64,11 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    try {
-        long id = Long.parseLong(request.getParameter("id"));
-        Key commentEntityKey = KeyFactory.createKey("Comment", id);
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.delete(commentEntityKey);
-     //when "id" parameter is null
-    } catch (NumberFormatException e) { 
-        String comment = request.getParameter("comment");
-        Entity commentEntity = new Entity("Comment");
-        commentEntity.setProperty("comment", comment);
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(commentEntity);
-    }
+    String comment = request.getParameter("comment");
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("comment", comment);
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
     response.sendRedirect("/index.html");
   }
 
@@ -85,7 +76,13 @@ public class DataServlet extends HttpServlet {
     // Get the input from the form.
     String userInputString = request.getParameter("value");
     // Convert the input to an int.
-    int userInput = Integer.parseInt(userInputString);
+    int userInput;
+    try {
+      userInput = Integer.parseInt(userInputString);
+    } catch (NumberFormatException e) {
+      System.err.println("Could not convert to int: " + userInputString);
+      return -1;
+    }
     // Check that the input is in range
     if (userInput < 0 || userInput > 10) {
       System.err.println("User input is out of range: " + userInputString);
