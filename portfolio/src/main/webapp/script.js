@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded',function(event){
     function typeWriter(text, i, fnCallback) {
     // check if text isn't finished yet
       if (i < (text.length)) {
-        // add next character 
+        // add next character
         document.querySelector("#typewriter").innerHTML = text.substring(0, i+1) +'<span aria-hidden="true"></span>';
         // wait for a while and call this function again for next character
         setTimeout(function() {
@@ -46,3 +46,43 @@ document.addEventListener('DOMContentLoaded',function(event){
   // start the text animation
     StartTextAnimation(0);
 });
+
+function getComments() {
+    var value = document.getElementById("number-comments").value;
+    console.log(value)
+    fetch("/comments?value="+value).then(response => response.json()).then((comments) => {
+    // Build the list of history entries.
+    const commentListElement = document.getElementById('comment-list');
+    commentListElement.innerHTML = "";
+    comments.forEach((comment) => {
+        commentListElement.appendChild(createCommentElement(comment));
+    });
+  });
+}
+
+/** Creates an <li> element containing text. */
+function createCommentElement(commentEntity) {
+  const commentElement = document.createElement('div');
+  commentElement.className = 'comment border border-info';
+
+  const textElement = document.createElement('span');
+  textElement.innerText = commentEntity.comment;
+
+  const deleteButtonElement = document.createElement('button');
+  deleteButtonElement.innerText = 'Delete';
+  deleteButtonElement.className= 'btn btn-danger float-right';
+  deleteButtonElement.addEventListener('click', () => {
+    deleteComment(commentEntity);
+    commentElement.remove();
+  });
+
+  commentElement.appendChild(textElement);
+  commentElement.appendChild(deleteButtonElement);
+  return commentElement;
+}
+
+function deleteComment(commentEntity) {
+    const params = new URLSearchParams();
+    params.append('id', commentEntity.id);
+    fetch('/comments', {method: 'POST', body: params});
+}

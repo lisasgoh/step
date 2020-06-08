@@ -10,22 +10,22 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="getComments()">
     <div class="topnav">
       <a href="#about-me">About</a>
       <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
       <a href="#contact">Contact</a>
     </div>
-    <div id="content">
-      <h1>Hi, I'm Lisa.</h1>
+    <div>
+      <h1 id="introduction">Hi, I'm Lisa.</h1>
       <p id="typewriter"></p>
     </div>
     <div>
-      <h2 id="about-me" class="section-header">ABOUT ME</h2>
-      <div class="container section">
+      <h2 class="section-header">ABOUT ME</h2>
+      <div id="about-me" class="container section">
         <div class="row">
-          <div class="col-md-6 offset-md-3">
+          <div class="col-lg-6 offset-lg-3">
             <p id="about-me-info"> I am a second-year undergraduate student, currently studying Computer Science and Business (Business Analytics) in Nanyang Technological University. </p>
           </div>
         </div>
@@ -33,7 +33,7 @@
       <h2 id= "experience" class="section-header">EXPERIENCE</h2>
       <div class= "container section">
         <div class="row">
-          <div class="col-md-4 offset-md-2" id="google-internship">
+          <div class="col-lg-4 offset-lg-2" id="google-internship">
             <div class="card card-body">
               <img class="icon" id="google-icon" src="/images/google.png" alt="Google logo">
               <h3>Google, Student Training in Engineering Program (STEP) Intern</h3>
@@ -42,7 +42,7 @@
               </div>
             </div>
           </div>
-          <div class= "col-md-4" id="astar-internship">
+          <div class= "col-lg-4" id="astar-internship">
             <div class="card card-body">
               <img id="astar-icon" class="icon" src="/images/astar.jpg" alt="Astar logo">
               <h3>Agency for Science, Technology and Research (A*STAR)</h3>
@@ -61,7 +61,7 @@
       <h2 id= "projects" class="section-header">PROJECTS AND COMPETITIONS</h2>
       <div class= "container section">
         <div class="row">
-            <div class= "col-sm-6 col-md-4">
+            <div class= "col-lg-4">
               <div class="card card-body">
                   <img id="edupedia-icon" class="icon"  src="/images/edupedia.png" alt="Graduation hat icon">
                   <h3>Edupedia</h3>
@@ -76,7 +76,7 @@
                   </div>
               </div>
             </div>
-            <div class= "col-sm-6 col-md-4">
+            <div class= "col-lg-4">
               <div class="card card-body">
                   <img id="study-buddy-icon" class="icon"  src="/images/studybuddy.png" alt="Study app icon">
                   <h3>Study Buddy</h3>
@@ -90,7 +90,7 @@
                   </div>
               </div>
             </div>
-            <div class= "col-sm-6 col-md-4">
+            <div class= "col-lg-4">
               <div class="card card-body">
                   <img id="paradigym-icon" class="icon"  src="/images/paradigym.jpg" alt="Exercising icon">
                   <h3>ParadiGYM Bot</h3>
@@ -109,7 +109,7 @@
       <h2 id="contact" class="section-header">CONTACT</h2>
       <div class= "container section">
         <div class="row">
-          <div class= "col-sm-6 col-md-4">
+          <div class= "col-md-4">
               <div class="warp">
                 <img class="link-logo"src="/images/gmail.png" alt="Gmail Logo"/>
                 <a href="mailto:lisa.shannon.goh@gmail.com" id="email">Email</a>
@@ -125,6 +125,26 @@
             </div>
         </div>
       </div>
-    </div>
+      <div class= "container">
+        <div class="row">
+            <div class="col-sm-12">
+              <form action="/comments" method="POST">
+                <textarea class="comment border border-info" type="text" name="comment" placeholder="Leave a comment..."></textarea>
+                <br></br>
+                <input type="submit" class="btn btn-secondary float-right" />
+              </form>
+            </div>
+        </div>
+        <div class="row section">
+            <div class="col-sm-12">
+              <label for="number-comments">Number of comments to display:</label>
+              <input type="number" id="number-comments" min="0" max="10" value="0">
+              <button class="btn btn-secondary float-right" onclick="getComments()">Generate comments</button>
+              </div>
+        </div>
+        <div class="row">
+            <div class= "col-sm-12" id="comment-list"></div>
+        </div>
+      </div>
   </body>
 </html>
