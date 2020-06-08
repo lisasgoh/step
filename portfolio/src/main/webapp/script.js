@@ -62,14 +62,15 @@ function getComments() {
 
 /** Creates an <li> element containing text. */
 function createCommentElement(commentEntity) {
-  const commentElement = document.createElement('li');
-  commentElement.className = 'comment';
+  const commentElement = document.createElement('div');
+  commentElement.className = 'comment border border-info';
 
   const textElement = document.createElement('span');
   textElement.innerText = commentEntity.comment;
 
   const deleteButtonElement = document.createElement('button');
   deleteButtonElement.innerText = 'Delete';
+  deleteButtonElement.className= 'btn btn-danger float-right';
   deleteButtonElement.addEventListener('click', () => {
     deleteComment(commentEntity);
     commentElement.remove();
