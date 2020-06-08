@@ -14,15 +14,13 @@
 
 package com.google.sps.data;
 
-public final class Comment {
+public final class User {
+     
+  private final boolean loginStatus;;
+  private final String url;
 
-  private final long id;
-  private final String comment;
-  private final String userEmail;
-
-  public Comment(long id, String comment, String userEmail) {
-    this.id = id;
-    this.comment = comment;
-    this.userEmail = userEmail;
+  public User(boolean loginStatus, String url) {
+    this.loginStatus = loginStatus;
+    this.url = url;
   }
 }

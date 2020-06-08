@@ -12,9 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-document.addEventListener('DOMContentLoaded',function(event){
-  // array with texts to type in typewriter
-  var dataText = [ "Programmer", "Learner" , "Dancer"];
+document.addEventListener('DOMContentLoaded',() => {    
+    textAnimation(event);
+    fetchLoginStatus();
+});
+
+function textAnimation(event) {
+    var dataText = [ "Programmer", "Learner" , "Dancer"];
   // type one text in the typwriter, keeps calling itself until the text is finished
     function typeWriter(text, i, fnCallback) {
     // check if text isn't finished yet
@@ -45,19 +49,18 @@ document.addEventListener('DOMContentLoaded',function(event){
     }
   // start the text animation
     StartTextAnimation(0);
-});
+}
 
 function getComments() {
     var value = document.getElementById("number-comments").value;
-    console.log(value)
     fetch("/comments?value="+value).then(response => response.json()).then((comments) => {
-    // Build the list of history entries.
-    const commentListElement = document.getElementById('comment-list');
-    commentListElement.innerHTML = "";
-    comments.forEach((comment) => {
-        commentListElement.appendChild(createCommentElement(comment));
+        // Build the list of comment entries.
+      const commentListElement = document.getElementById('comment-list');
+      commentListElement.innerHTML = "";
+      comments.forEach((comment) => {
+      commentListElement.appendChild(createCommentElement(comment));
+      });
     });
-  });
 }
 
 /** Creates an <li> element containing text. */
@@ -66,7 +69,7 @@ function createCommentElement(commentEntity) {
   commentElement.className = 'comment border border-info';
 
   const textElement = document.createElement('span');
-  textElement.innerText = commentEntity.comment;
+  textElement.innerText = commentEntity.userEmail + ": " + commentEntity.comment;
 
   const deleteButtonElement = document.createElement('button');
   deleteButtonElement.innerText = 'Delete';
@@ -85,4 +88,18 @@ function deleteComment(commentEntity) {
     const params = new URLSearchParams();
     params.append('id', commentEntity.id);
     fetch('/comments', {method: 'POST', body: params});
+}
+
+function fetchLoginStatus() {
+    fetch("/login").then(response => response.json()).then((user) => {
+      const url  = document.getElementById('login-logout-url');
+      if (user.loginStatus) {
+        const commentForm = document.getElementById("comment-form");
+        commentForm.style.display = "block";
+        url.innerHTML = "<p>Logout <a href=\"" + user.url + "\">here</a>.</p>";
+      }
+      else {
+        url.innerHTML = "<p>Login <a href=\"" + user.url + "\">here</a> to submit comments.</p>";
+      }
+    });
 }
