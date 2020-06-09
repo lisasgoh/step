@@ -41,11 +41,13 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    int userInput = getUserInput(request);
-    if (userInput == -1) {
-      response.setContentType("text/html");
-      response.getWriter().println("Please enter a non-negative integer.");
-      return;
+    int userInput;
+    try {
+       userInput = getUserInput(request);
+    }
+    catch(IllegalArgumentException e) {
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        return;
     }
     Query query = new Query("Comment");
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -72,21 +74,15 @@ public class DataServlet extends HttpServlet {
     response.sendRedirect("/index.html");
   }
 
-  private int getUserInput(HttpServletRequest request) {
+  private int getUserInput(HttpServletRequest request) throws IllegalArgumentException {
     // Get the input from the form.
     String userInputString = request.getParameter("value");
     // Convert the input to an int.
     int userInput;
-    try {
-      userInput = Integer.parseInt(userInputString);
-    } catch (NumberFormatException e) {
-      System.err.println("Could not convert to int: " + userInputString);
-      return -1;
-    }
+    userInput = Integer.parseInt(userInputString);
     // Check that the input is in range
     if (userInput < 0 || userInput > 10) {
-      System.err.println("User input is out of range: " + userInputString);
-      return -1;
+      throw new IllegalArgumentException("Value should be between 0 and 1.");
     }
     return userInput;
   }
