@@ -26,6 +26,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.gson.Gson;
 import com.google.sps.data.Comment;
 import java.io.IOException;
+import java.lang.IllegalArgumentException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -42,10 +43,10 @@ public class DataServlet extends HttpServlet {
   Gson gson = new Gson();
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
     int userInput;
     try {
-       userInput = getUserInput(request);
+        userInput = getUserInput(request);
     }
     catch(IllegalArgumentException e) {
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -92,7 +93,7 @@ public class DataServlet extends HttpServlet {
     int userInput = Integer.parseInt(userInputString);
     // Check that the input is in range
     if (userInput < 0 || userInput > 10) {
-      throw new IllegalArgumentException("Value should be between 0 and 1.");
+       throw new IllegalArgumentException("Value should be between 0 and 10.");
     }
     return userInput;
   }
