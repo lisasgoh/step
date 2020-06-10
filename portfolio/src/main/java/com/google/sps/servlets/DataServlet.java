@@ -21,6 +21,8 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.gson.Gson;
 import com.google.sps.data.Comment;
 import java.io.IOException;
@@ -66,20 +68,28 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String comment = request.getParameter("comment");
-    Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty("comment", comment);
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(commentEntity);
+    try {
+        long id = Long.parseLong(request.getParameter("id"));
+        Key commentEntityKey = KeyFactory.createKey("Comment", id);
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.delete(commentEntityKey);
+     //when "id" parameter is null
+    } catch (NumberFormatException e) { 
+        String comment = request.getParameter("comment");
+        Entity commentEntity = new Entity("Comment");
+        commentEntity.setProperty("comment", comment);
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(commentEntity);
+    }
     response.sendRedirect("/index.html");
+
   }
 
   private int getUserInput(HttpServletRequest request) throws IllegalArgumentException {
     // Get the input from the form.
     String userInputString = request.getParameter("value");
     // Convert the input to an int.
-    int userInput;
-    userInput = Integer.parseInt(userInputString);
+    int userInput = Integer.parseInt(userInputString);
     // Check that the input is in range
     if (userInput < 0 || userInput > 10) {
       throw new IllegalArgumentException("Value should be between 0 and 1.");
