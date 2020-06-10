@@ -14,7 +14,7 @@
 
 document.addEventListener('DOMContentLoaded',() => {    
     textAnimation(event);
-    createMap();
+    createBigfootSightingsMap();
 });
 
 function textAnimation(event) {
@@ -91,12 +91,12 @@ function deleteComment(commentEntity) {
     fetch('/comments', {method: 'POST', body: params});
 }
 
-function createMap() {
-  const map = new google.maps.Map(
-      document.getElementById('map'),
-      {center: {lat: 37.422, lng: -122.084}, 
-      zoom: 16,
-      styles: [
+function createBigfootSightingsMap() {
+  fetch('/bigfoot-data').then(response => response.json()).then((bigfootSightings) => {
+    const map = new google.maps.Map(
+        document.getElementById('map'),
+        {center: {lat: 35.78613674, lng: -119.4491591}, zoom: 7,
+        styles: [
             {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
             {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
             {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
@@ -175,5 +175,13 @@ function createMap() {
               elementType: 'labels.text.stroke',
               stylers: [{color: '#17263c'}]
             }
-          ]});
+          ]
+        });
+
+    bigfootSightings.forEach((bigfootSighting) => {
+      new google.maps.Marker(
+          {position: {lat: bigfootSighting.lat, lng: bigfootSighting.lng}, map: map});
+    });
+    google.maps.event.trigger(map, "resize");
+  });
 }
