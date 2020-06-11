@@ -88,32 +88,24 @@ function deleteComment(commentEntity) {
 }
 
 google.charts.load('current', {'packages':['geochart'],
-        'mapsApiKey': 'AIzaSyBnHN51IlnPwQLHTVmMDYbpscL-WXEysNQ'
-      });
-      google.charts.setOnLoadCallback(drawRegionsMap);
+    'mapsApiKey': 'AIzaSyBnHN51IlnPwQLHTVmMDYbpscL-WXEysNQ'
+});
+google.charts.setOnLoadCallback(drawRegionsMap);
 
-      function drawRegionsMap() {
-        fetch('/covid-data').then(response => response.json()).then((covidData) => {
-          console.log(covidData);
-          const data = new google.visualization.DataTable();
-          data.addColumn('string', 'Country');
-          data.addColumn('number', 'Cases');
-          Object.keys(covidData).forEach((country) => {
-          console.log(covidData[country]);
-          console.log(covidData[country][0]);
-          /*String cases = "Total: " + covidData[country][0] 
-                         + "Deaths: " + covidData[country][1]  
-                         + "Recovered: "  + covidData[country][2]  
-                         + "Active: " + covidData[country][3];
-                         */
-          data.addRow([country, covidData[country][0]]);
+function drawRegionsMap() {
+    fetch('/covid-data').then(response => response.json()).then((covidData) => {
+        const data = new google.visualization.DataTable();
+        data.addColumn('string', 'Country');
+        data.addColumn('number', 'Cases');
+        Object.keys(covidData).forEach((country) => {
+            data.addRow([country, covidData[country][0]]);
         });
         const options = {
-          'title': 'COVID-19 Data',
-          'width':600,
-          'height':500
+            'title': 'COVID-19 Data',
+            'width':600,
+            'height':500
         };
         var chart = new google.visualization.GeoChart(document.getElementById('chart-container'));
         chart.draw(data, options);
-     });
+    });
 }
