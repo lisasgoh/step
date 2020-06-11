@@ -55,7 +55,7 @@ function getComments() {
     var value = document.getElementById("number-comments").value;
     console.log(value)
     fetch("/comments?value="+value).then(response => response.json()).then((comments) => {
-        // Build the list of comment entries.
+    // Build the list of comment entries.
     const commentListElement = document.getElementById('comment-list');
     commentListElement.innerHTML = "";
     comments.forEach((comment) => {
