@@ -12,7 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-document.addEventListener('DOMContentLoaded',function(event){
+document.addEventListener('DOMContentLoaded',() => {    
+    textAnimation(event);
+    fetchBlobstoreUrlAndShowForm();
+});
+
+function textAnimation(event) {
   // array with texts to type in typewriter
   var dataText = [ "Programmer", "Learner" , "Dancer"];
   // type one text in the typwriter, keeps calling itself until the text is finished
@@ -45,7 +50,7 @@ document.addEventListener('DOMContentLoaded',function(event){
     }
   // start the text animation
     StartTextAnimation(0);
-});
+}
 
 function getComments() {
     var value = document.getElementById("number-comments").value;
@@ -76,8 +81,13 @@ function createCommentElement(commentEntity) {
     commentElement.remove();
   });
 
+  const imageElement = document.createElement("img");
+  imageElement.src = commentEntity.imageUrl;
+  console.log(commentEntity.imageUrl);
+
   commentElement.appendChild(textElement);
   commentElement.appendChild(deleteButtonElement);
+  commentElement.appendChild(imageElement);
   return commentElement;
 }
 
@@ -85,4 +95,16 @@ function deleteComment(commentEntity) {
     const params = new URLSearchParams();
     params.append('id', commentEntity.id);
     fetch('/comments', {method: 'POST', body: params});
+}
+
+function fetchBlobstoreUrlAndShowForm() {
+  fetch('/blobstore-upload-url')
+      .then((response) => {
+        return response.text();
+      })
+      .then((imageUploadUrl) => {
+        const messageForm = document.getElementById('my-form');
+        messageForm.action = imageUploadUrl;
+        messageForm.classList.remove('hidden');
+      });
 }
