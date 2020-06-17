@@ -111,3 +111,11 @@ body {
     padding-bottom: 10px;
     margin-bottom: 10px;
 }
+
+#map {
+  height:500px;
+  width: 500px;
+
+#comment-form {
+    display: none;
+}
