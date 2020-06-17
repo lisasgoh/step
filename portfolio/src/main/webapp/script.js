@@ -86,3 +86,26 @@ function deleteComment(commentEntity) {
     params.append('id', commentEntity.id);
     fetch('/comments', {method: 'POST', body: params});
 }
+
+google.charts.load('current', {'packages':['geochart'],
+    'mapsApiKey': 'AIzaSyBnHN51IlnPwQLHTVmMDYbpscL-WXEysNQ'
+});
+google.charts.setOnLoadCallback(drawRegionsMap);
+
+function drawRegionsMap() {
+    fetch('/covid-data').then(response => response.json()).then((covidData) => {
+        const data = new google.visualization.DataTable();
+        data.addColumn('string', 'Country');
+        data.addColumn('number', 'Cases');
+        Object.keys(covidData).forEach((country) => {
+            data.addRow([country, covidData[country][0]]);
+        });
+        const options = {
+            'title': 'COVID-19 Data',
+            'width':600,
+            'height':500
+        };
+        var chart = new google.visualization.GeoChart(document.getElementById('chart-container'));
+        chart.draw(data, options);
+    });
+}
