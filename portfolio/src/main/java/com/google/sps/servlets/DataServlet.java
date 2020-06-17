@@ -16,6 +16,8 @@ package com.google.sps.servlets;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
@@ -34,7 +36,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.Gson;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/comments")
@@ -59,7 +60,8 @@ public class DataServlet extends HttpServlet {
     for (Entity entity : entities) {
       long id = entity.getKey().getId();
       String comment = (String) entity.getProperty("comment");
-      Comment commentEntity = new Comment(id, comment);
+      String userEmail = (String) entity.getProperty("email");
+      Comment commentEntity = new Comment(id, comment, userEmail);
       commentEntities.add(commentEntity);
     }
     response.setContentType("application/json");
@@ -68,17 +70,19 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    try {
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    try { 
         long id = Long.parseLong(request.getParameter("id"));
         Key commentEntityKey = KeyFactory.createKey("Comment", id);
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.delete(commentEntityKey);
      //when "id" parameter is null
     } catch (NumberFormatException e) { 
         String comment = request.getParameter("comment");
+        UserService userService = UserServiceFactory.getUserService();
+        String userEmail = userService.getCurrentUser().getEmail();
         Entity commentEntity = new Entity("Comment");
         commentEntity.setProperty("comment", comment);
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        commentEntity.setProperty("email", userEmail);
         datastore.put(commentEntity);
     }
     response.sendRedirect("/index.html");
