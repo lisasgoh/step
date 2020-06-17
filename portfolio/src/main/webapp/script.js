@@ -15,6 +15,7 @@
 document.addEventListener('DOMContentLoaded',() => {    
     textAnimation(event);
     createBigfootSightingsMap();
+    fetchLoginStatus();
 });
 
 function textAnimation(event) {
@@ -53,7 +54,6 @@ function textAnimation(event) {
 
 function getComments() {
     var value = document.getElementById("number-comments").value;
-    console.log(value)
     fetch("/comments?value="+value).then(response => response.json()).then((comments) => {
     // Build the list of comment entries.
     const commentListElement = document.getElementById('comment-list');
@@ -61,7 +61,6 @@ function getComments() {
     comments.forEach((comment) => {
     commentListElement.appendChild(createCommentElement(comment));
     });
-  });
 }
 
 /** Creates an <li> element containing text. */
@@ -70,7 +69,7 @@ function createCommentElement(commentEntity) {
   commentElement.className = 'comment border border-info';
 
   const textElement = document.createElement('span');
-  textElement.innerText = commentEntity.comment;
+  textElement.innerText = commentEntity.userEmail + ": " + commentEntity.comment;
 
   const deleteButtonElement = document.createElement('button');
   deleteButtonElement.innerText = 'Delete';
@@ -89,6 +88,18 @@ function deleteComment(commentEntity) {
     const params = new URLSearchParams();
     params.append('id', commentEntity.id);
     fetch('/comments', {method: 'POST', body: params});
+
+function fetchLoginStatus() {
+    fetch("/login").then(response => response.json()).then((user) => {
+      const url  = document.getElementById('login-logout-url');
+      if (user.loginStatus) {
+        const commentForm = document.getElementById("comment-form");
+        commentForm.style.display = "block";
+        url.innerHTML = "<p>Logout <a href=\"" + user.url + "\">here</a>.</p>";
+      }
+      else {
+        url.innerHTML = "<p>Login <a href=\"" + user.url + "\">here</a> to submit comments.</p>";
+      }
 }
 
 function createBigfootSightingsMap() {

@@ -115,4 +115,7 @@ body {
 #map {
   height:500px;
   width: 500px;
+
+#comment-form {
+    display: none;
 }
