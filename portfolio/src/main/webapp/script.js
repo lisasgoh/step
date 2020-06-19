@@ -88,6 +88,7 @@ function deleteComment(commentEntity) {
     const params = new URLSearchParams();
     params.append('id', commentEntity.id);
     fetch('/comments', {method: 'POST', body: params});
+}
 
 function fetchLoginStatus() {
     fetch("/login").then(response => response.json()).then((user) => {
@@ -99,5 +100,5 @@ function fetchLoginStatus() {
       }
       else {
         url.innerHTML = "<p>Login <a href=\"" + user.url + "\">here</a> to submit comments.</p>";
-      }
+      });
 }
