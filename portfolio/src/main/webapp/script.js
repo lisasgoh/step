@@ -14,12 +14,14 @@
 
 document.addEventListener('DOMContentLoaded',() => {    
     textAnimation(event);
+    fetchBlobstoreUrlAndShowForm();
     createBigfootSightingsMap();
     fetchLoginStatus();
 });
 
 function textAnimation(event) {
-    var dataText = [ "Programmer", "Learner" , "Dancer"];
+  // array with texts to type in typewriter
+  var dataText = [ "Programmer", "Learner" , "Dancer"];
   // type one text in the typwriter, keeps calling itself until the text is finished
     function typeWriter(text, i, fnCallback) {
     // check if text isn't finished yet
@@ -79,8 +81,13 @@ function createCommentElement(commentEntity) {
     commentElement.remove();
   });
 
+  const imageElement = document.createElement("img");
+  imageElement.src = commentEntity.imageUrl;
+  console.log(commentEntity.imageUrl);
+
   commentElement.appendChild(textElement);
   commentElement.appendChild(deleteButtonElement);
+  commentElement.appendChild(imageElement);
   return commentElement;
 }
 
@@ -195,4 +202,16 @@ function createBigfootSightingsMap() {
     });
     google.maps.event.trigger(map, "resize");
   });
+}
+
+function fetchBlobstoreUrlAndShowForm() {
+  fetch('/blobstore-upload-url')
+      .then((response) => {
+        return response.text();
+      })
+      .then((imageUploadUrl) => {
+        const messageForm = document.getElementById('my-form');
+        messageForm.action = imageUploadUrl;
+        messageForm.classList.remove('hidden');
+      });
 }
