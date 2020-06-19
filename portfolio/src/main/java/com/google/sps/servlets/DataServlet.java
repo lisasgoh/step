@@ -75,7 +75,7 @@ public class DataServlet extends HttpServlet {
       String comment = (String) entity.getProperty("comment");
       String imageUrl = (String) entity.getProperty("image");
       String userEmail = (String) entity.getProperty("email");
-      Comment commentEntity = new Comment(id, comment, userEmail, imageUrl);
+      Comment commentEntity = new Comment(id, comment, imageUrl, userEmail);
       commentEntities.add(commentEntity);
     }
     response.setContentType("application/json");
