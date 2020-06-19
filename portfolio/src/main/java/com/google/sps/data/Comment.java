@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.sps;
+package com.google.sps.data;
 
-/**
- * Utility class for creating greeting messages.
- */
-public class Greeter {
-  /**
-   * Returns a greeting for the given name.
-   */
-  public String greet(String name) {
-    name = name.replaceAll("\\s+","");
-    return "Hello " + name;
+public final class Comment {
+
+  private final long id;
+  private final String comment;
+  private final String userEmail;
+
+  public Comment(long id, String comment, String userEmail) {
+    this.id = id;
+    this.comment = comment;
+    this.userEmail = userEmail;
   }
 }

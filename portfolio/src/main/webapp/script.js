@@ -12,14 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-document.addEventListener('DOMContentLoaded',function(event){
-  // array with texts to type in typewriter
-  var dataText = [ "Programmer", "Learner" , "Dancer"];
+document.addEventListener('DOMContentLoaded',() => {    
+    textAnimation(event);
+    createBigfootSightingsMap();
+    fetchLoginStatus();
+});
+
+function textAnimation(event) {
+    var dataText = [ "Programmer", "Learner" , "Dancer"];
   // type one text in the typwriter, keeps calling itself until the text is finished
     function typeWriter(text, i, fnCallback) {
     // check if text isn't finished yet
       if (i < (text.length)) {
-        // add next character 
+        // add next character
         document.querySelector("#typewriter").innerHTML = text.substring(0, i+1) +'<span aria-hidden="true"></span>';
         // wait for a while and call this function again for next character
         setTimeout(function() {
@@ -45,4 +50,149 @@ document.addEventListener('DOMContentLoaded',function(event){
     }
   // start the text animation
     StartTextAnimation(0);
-});
+}
+
+function getComments() {
+    var value = document.getElementById("number-comments").value;
+    fetch("/comments?value="+value).then(response => response.json()).then((comments) => {
+    // Build the list of comment entries.
+    const commentListElement = document.getElementById('comment-list');
+    commentListElement.innerHTML = "";
+    comments.forEach((comment) => {
+    commentListElement.appendChild(createCommentElement(comment));
+    });
+}
+
+/** Creates an <li> element containing text. */
+function createCommentElement(commentEntity) {
+  const commentElement = document.createElement('div');
+  commentElement.className = 'comment border border-info';
+
+  const textElement = document.createElement('span');
+  textElement.innerText = commentEntity.userEmail + ": " + commentEntity.comment;
+
+  const deleteButtonElement = document.createElement('button');
+  deleteButtonElement.innerText = 'Delete';
+  deleteButtonElement.className= 'btn btn-danger float-right';
+  deleteButtonElement.addEventListener('click', () => {
+    deleteComment(commentEntity);
+    commentElement.remove();
+  });
+
+  commentElement.appendChild(textElement);
+  commentElement.appendChild(deleteButtonElement);
+  return commentElement;
+}
+
+function deleteComment(commentEntity) {
+    const params = new URLSearchParams();
+    params.append('id', commentEntity.id);
+    fetch('/comments', {method: 'POST', body: params});
+
+function fetchLoginStatus() {
+    fetch("/login").then(response => response.json()).then((user) => {
+      const url  = document.getElementById('login-logout-url');
+      if (user.loginStatus) {
+        const commentForm = document.getElementById("comment-form");
+        commentForm.style.display = "block";
+        url.innerHTML = "<p>Logout <a href=\"" + user.url + "\">here</a>.</p>";
+      }
+      else {
+        url.innerHTML = "<p>Login <a href=\"" + user.url + "\">here</a> to submit comments.</p>";
+      }
+}
+
+function createBigfootSightingsMap() {
+  fetch('/bigfoot-data').then(response => response.json()).then((bigfootSightings) => {
+    const map = new google.maps.Map(
+        document.getElementById('map'),
+        {center: {lat: 35.78613674, lng: -119.4491591}, zoom: 7,
+        styles: [
+            {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+            {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+            {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+            {
+              featureType: 'administrative.locality',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'poi',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'geometry',
+              stylers: [{color: '#263c3f'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#6b9a76'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry',
+              stylers: [{color: '#38414e'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#212a37'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#9ca5b3'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry',
+              stylers: [{color: '#746855'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#1f2835'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#f3d19c'}]
+            },
+            {
+              featureType: 'transit',
+              elementType: 'geometry',
+              stylers: [{color: '#2f3948'}]
+            },
+            {
+              featureType: 'transit.station',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'geometry',
+              stylers: [{color: '#17263c'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#515c6d'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.stroke',
+              stylers: [{color: '#17263c'}]
+            }
+          ]
+        });
+
+    bigfootSightings.forEach((bigfootSighting) => {
+      new google.maps.Marker(
+          {position: {lat: bigfootSighting.lat, lng: bigfootSighting.lng}, map: map});
+    });
+    google.maps.event.trigger(map, "resize");
+  });
+}
